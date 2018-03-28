@@ -30,7 +30,7 @@ set(FOOTSTEP_PLANNER_FILES src/FootstepPlanner.cpp
 )
 
 include_directories(include)
-include_directories(${catkin_INCLUDE_DIRS})
+include_directories(${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
 
 
 add_library(${PROJECT_NAME} ${FOOTSTEP_PLANNER_FILES})

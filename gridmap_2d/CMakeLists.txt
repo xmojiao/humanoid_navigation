@@ -10,7 +10,7 @@ catkin_package(
   LIBRARIES ${PROJECT_NAME}
 )
 
-include_directories(include ${catkin_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
 
 add_library(${PROJECT_NAME} src/GridMap2D.cpp)
 

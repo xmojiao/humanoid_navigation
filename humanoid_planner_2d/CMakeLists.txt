@@ -19,12 +19,12 @@ catkin_package(
   DEPENDS sbpl  
 )
 
-include_directories(include ${catkin_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
 
 add_library(${PROJECT_NAME} src/SBPLPlanner2D.cpp)
-target_link_libraries(${PROJECT_NAME} ${SBPL_LIBRARIES} ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${SBPL_LIBRARIES} ${catkin_LIBRARIES} ${OpenCV_LIBS})
 add_executable(sbpl_2d_planner_node src/humanoid_planner_2d.cpp)
-target_link_libraries(sbpl_2d_planner_node ${PROJECT_NAME} ${catkin_LIBRARIES})
+target_link_libraries(sbpl_2d_planner_node ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBS})
 
 # install
 install(TARGETS ${PROJECT_NAME}
