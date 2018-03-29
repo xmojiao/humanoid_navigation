@@ -32,7 +32,7 @@
 
 #include <tf/transform_datatypes.h>
 
-#include <Eigen/Core>
+#include <eigen3/Eigen/Core>
 
 #include <pcl_ros/point_cloud.h>
 #include <pcl/point_types.h>
