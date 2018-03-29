@@ -13,6 +13,7 @@
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
   <url>http://ros.org/wiki/gridmap_2d</url>
   <buildtool_depend>catkin</buildtool_depend>
+  <depend>roscpp</depend>
   <depend>rosconsole</depend>
   <depend>nav_msgs</depend>
   <depend>libopencv-dev</depend>

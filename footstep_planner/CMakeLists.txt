@@ -1,19 +1,78 @@
+################################################################################
+# Set minimum required version of cmake, project name and compile options
+################################################################################
 cmake_minimum_required(VERSION 2.8.3)
 project(footstep_planner)
 
-find_package(catkin REQUIRED COMPONENTS actionlib angles gridmap_2d humanoid_nav_msgs map_server roscpp rospy tf visualization_msgs)
+################################################################################
+# Find catkin packages and libraries for catkin and system dependencies
+################################################################################
+find_package(catkin REQUIRED COMPONENTS 
+  roscpp
+  rospy
+  actionlib
+  rosconsole
+  sensor_msgs
+  geometry_msgs
+  nav_msgs
+  visualization_msgs
+  humanoid_nav_msgs
+  tf
+  angles
+  gridmap_2d
+  map_server
+)
 
 find_package(OpenCV REQUIRED)
 
-#find_package(sbpl REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(SBPL REQUIRED sbpl)
 include_directories(${SBPL_INCLUDE_DIRS})
 link_directories(${SBPL_LIBRARY_DIRS})
 
+################################################################################
+# Setup for python modules and scripts
+################################################################################
+
+################################################################################
+# Declare ROS messages, services and actions
+################################################################################
+
+################################################################################
+# Declare ROS dynamic reconfigure parameters
+################################################################################
+
+################################################################################
+# Declare catkin specific configuration to be passed to dependent projects
+################################################################################
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
+  CATKIN_DEPENDS
+    roscpp
+    rospy
+    actionlib
+    rosconsole
+    sensor_msgs
+    geometry_msgs
+    nav_msgs
+    visualization_msgs
+    humanoid_nav_msgs
+    tf
+    angles
+    gridmap_2d
+    map_server
+  DEPENDS OpenCV SBPL
+)
+
+################################################################################
+# Build
+################################################################################
+include_directories(
+  include
+  ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
+  ${SBPL_INCLUDE_DIRS}
 )
 
 set(FOOTSTEP_PLANNER_FILES src/FootstepPlanner.cpp
@@ -29,30 +88,35 @@ set(FOOTSTEP_PLANNER_FILES src/FootstepPlanner.cpp
     src/State.cpp
 )
 
-include_directories(include)
-include_directories(${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
-
-
 add_library(${PROJECT_NAME} ${FOOTSTEP_PLANNER_FILES})
-target_link_libraries(${PROJECT_NAME} ${SBPL_LIBRARIES} ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${SBPL_LIBRARIES})
 
 add_executable(footstep_planner_node src/footstep_planner.cpp)
 target_link_libraries(footstep_planner_node ${PROJECT_NAME} ${SBPL_LIBRARIES})
 
 add_executable(footstep_planner_walls src/footstep_planner_walls.cpp)
-target_link_libraries(footstep_planner_walls ${PROJECT_NAME} ${SBPL_LIBRARIES} ${OpenCV_LIBS})
+target_link_libraries(footstep_planner_walls ${PROJECT_NAME} ${OpenCV_LIBRARIES} ${SBPL_LIBRARIES})
 
 add_executable(footstep_navigation_node src/footstep_navigation.cpp)
 target_link_libraries(footstep_navigation_node ${PROJECT_NAME} ${SBPL_LIBRARIES})
 
-# install
+################################################################################
+# Install
+################################################################################
 install(TARGETS ${PROJECT_NAME} footstep_planner_node footstep_planner_walls 
-        DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+
 install(TARGETS footstep_navigation_node
-        DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+
 install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-  FILES_MATCHING PATTERN "*.h"
 )
+
+################################################################################
+# Test
+################################################################################
