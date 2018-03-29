@@ -27,8 +27,7 @@
 #include <ros/ros.h>
 #include <tf/transform_listener.h>
 #include <tf/transform_datatypes.h>
-#include <Eigen/Cholesky>
-
+#include <eigen3/Eigen/Cholesky>
 #include <humanoid_localization/humanoid_localization_defs.h>
 
 namespace humanoid_localization{
