@@ -1,13 +1,32 @@
+################################################################################
+# Set minimum required version of cmake, project name and compile options
+################################################################################
 cmake_minimum_required(VERSION 2.8.3)
 project(humanoid_localization)
 
-find_package(catkin REQUIRED COMPONENTS roscpp pcl_conversions pcl_ros message_filters sensor_msgs cmake_modules)
-find_package(OpenMP)
+################################################################################
+# Find catkin packages and libraries for catkin and system dependencies
+################################################################################
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  std_msgs
+  std_srvs
+  sensor_msgs
+  geometry_msgs
+  octomap_msgs
+  visualization_msgs
+  cmake_modules
+  tf
+  message_filters
+  octomap_ros
+  pcl_ros
+  pcl_conversions
+)
+
 find_package(Boost REQUIRED COMPONENTS random)
-find_package(Eigen REQUIRED)
+find_package(Eigen3 REQUIRED)
+find_package(OpenMP)
 find_package(octomap REQUIRED)
-include_directories(${OCTOMAP_INCLUDE_DIRS})
-link_libraries(${OCTOMAP_LIBRARIES})
 
 # required for OpenMP
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
@@ -18,7 +37,7 @@ SET(LIBRARIES mapmodel motionmodel observationmodel raycastingmodel)
 
 find_package(dynamicEDT3D)
 if (${dynamicEDT3D_FOUND})                                                                       
-  include_directories(${DYNAMICEDT3D_INCLUDE_DIRS})                                                          
+  include_directories(${DYNAMICEDT3D_INCLUDE_DIRS})
   link_directories(${DYNAMICEDT3D_LIBRARY_DIRS})
   LINK_LIBRARIES(${OCTOMAP_LIBRARIES} ${DYNAMICEDT3D_LIBRARIES})
   list(APPEND LIBRARIES endpointmodel)
@@ -27,15 +46,51 @@ else (${dynamicEDT3D_FOUND})
   add_definitions(-DSKIP_ENDPOINT_MODEL)
 endif (${dynamicEDT3D_FOUND})
 
+################################################################################
+# Setup for python modules and scripts
+################################################################################
+
+################################################################################
+# Declare ROS messages, services and actions
+################################################################################
+
+################################################################################
+# Declare ROS dynamic reconfigure parameters
+################################################################################
+
+################################################################################
+# Declare catkin specific configuration to be passed to dependent projects
+################################################################################
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${LIBRARIES} humanoidlocalization
-  CATKIN_DEPENDS tf
-  DEPENDS octomap OpenMP
+  CATKIN_DEPENDS 
+    roscpp
+    std_msgs
+    std_srvs
+    sensor_msgs
+    geometry_msgs
+    octomap_msgs
+    visualization_msgs
+    cmake_modules
+    tf
+    message_filters
+    octomap_ros
+    pcl_ros
+    pcl_conversions  
+  DEPENDS Boost EIGEN3 OpenMP octomap
 )
 
-include_directories(include
+################################################################################
+# Build
+################################################################################
+include_directories(
+  include
   ${catkin_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIRS}
+  ${OCTOMAP_INCLUDE_DIRS}
+  ${OpenMP_INCLUDE_DIRS}
 )
 
 if (${dynamicEDT3D_FOUND})
@@ -50,15 +105,34 @@ add_library(raycastingmodel src/RaycastingModel.cpp)
 target_link_libraries(raycastingmodel observationmodel)
 
 add_library(humanoidlocalization src/HumanoidLocalization.cpp)
-target_link_libraries(humanoidlocalization ${LIBRARIES} ${catkin_LIBRARIES})
+target_link_libraries(humanoidlocalization ${LIBRARIES} ${catkin_LIBRARIES} ${OCTOMAP_LIBRARIES})
 
 add_executable(localization_node src/localization_node.cpp)
-target_link_libraries(localization_node humanoidlocalization ${catkin_LIBRARIES})
+target_link_libraries(localization_node humanoidlocalization ${catkin_LIBRARIES} ${OCTOMAP_LIBRARIES})
 
-# install
+################################################################################
+# Install
+################################################################################
 install(TARGETS ${LIBRARIES} humanoidlocalization
-        DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 ) 
+
 install(TARGETS localization_node
-        DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+)
+
+install(DIRECTORY config launch
+	DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+################################################################################
+# Test
+################################################################################

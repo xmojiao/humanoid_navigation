@@ -14,9 +14,9 @@
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
   <url>http://ros.org/wiki/humanoid_planner_2d</url>
   <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>roscpp</build_depend>
-  <build_depend>geometry_msgs</build_depend>
-  <build_depend>visualization_msgs</build_depend>
-  <build_depend>gridmap_2d</build_depend>
-  <build_depend>sbpl</build_depend>
+  <depend>roscpp</depend>
+  <depend>geometry_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <depend>gridmap_2d</depend>
+  <depend>sbpl</depend>
 </package>

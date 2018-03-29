@@ -22,8 +22,6 @@
   <url>http://ros.org/wiki/humanoid_localization</url>
   <buildtool_depend>catkin</buildtool_depend> 
   <depend>roscpp</depend>
-  <depend>cmake_modules</depend>
-  <depend>tf</depend>
   <depend>std_msgs</depend>
   <depend>std_srvs</depend>
   <depend>sensor_msgs</depend>
@@ -31,9 +29,13 @@
   <depend>nav_msgs</depend>
   <depend>octomap_msgs</depend>
   <depend>visualization_msgs</depend>
+  <depend>cmake_modules</depend>
+  <depend>tf</depend>
   <depend>message_filters</depend>
   <depend>octomap_ros</depend>
-  <depend>octomap</depend>
   <depend>pcl_ros</depend>
   <depend>pcl_conversions</depend>
+  <depend>boost</depend>
+  <depend>eigen</depend>
+  <depend>octomap</depend>
 </package>
