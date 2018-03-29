@@ -117,6 +117,16 @@ install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 )
 
+install(DIRECTORY config launch maps 
+	DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+install(PROGRAMS
+  scripts/corrected_initialpose.py
+  scripts/plan_footsteps.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
 ################################################################################
 # Test
 ################################################################################
