@@ -25,7 +25,7 @@
 #define HUMANOID_LOCALIZATION_ENDPOINTMODEL_H_
 
 #include <limits>
-#include<cmath>
+#include <cmath>
 
 #include <omp.h>
 
