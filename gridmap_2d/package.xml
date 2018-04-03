@@ -9,7 +9,6 @@
   <license>BSD</license>
   <maintainer email="HornungA@informatik.uni-freiburg.de">Armin Hornung</maintainer>
   <maintainer email="aravindadp@gmail.com">Pramuditha Aravinda</maintainer>
-  <maintainer email="kmjung@robotis.com">Kayman</maintainer>
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
   <url>http://ros.org/wiki/gridmap_2d</url>
   <buildtool_depend>catkin</buildtool_depend>

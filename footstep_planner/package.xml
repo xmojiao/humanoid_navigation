@@ -18,7 +18,6 @@
   <author>Johannes Garimort, Armin Hornung</author>
   <maintainer email="HornungA@informatik.uni-freiburg.de">Armin Hornung</maintainer>
   <maintainer email="aravindadp@gmail.com">Pramuditha Aravinda</maintainer>
-  <maintainer email="kmjung@robotis.com">Kayman</maintainer>
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
   <url>http://ros.org/wiki/footstep_planner</url>
   <buildtool_depend>catkin</buildtool_depend>
