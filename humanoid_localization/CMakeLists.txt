@@ -77,7 +77,7 @@ catkin_package(
     message_filters
     octomap_ros
     pcl_ros
-    pcl_conversions  
+    pcl_conversions
   DEPENDS Boost EIGEN3
 )
 
@@ -89,26 +89,23 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
-  ${OCTOMAP_INCLUDE_DIRS}
-  ${OpenMP_INCLUDE_DIRS}
 )
 
 if (${dynamicEDT3D_FOUND})
-  add_library(endpointmodel src/EndpointModel.cpp)
+add_library(endpointmodel src/EndpointModel.cpp)
 endif (${dynamicEDT3D_FOUND})
 
 add_library(mapmodel src/MapModel.cpp)
 add_library(motionmodel src/MotionModel.cpp)
 add_library(observationmodel src/ObservationModel.cpp)
-
 add_library(raycastingmodel src/RaycastingModel.cpp)
 target_link_libraries(raycastingmodel observationmodel)
 
 add_library(humanoidlocalization src/HumanoidLocalization.cpp)
-target_link_libraries(humanoidlocalization ${LIBRARIES} ${catkin_LIBRARIES} ${OCTOMAP_LIBRARIES})
+target_link_libraries(humanoidlocalization ${catkin_LIBRARIES} ${LIBRARIES})
 
 add_executable(localization_node src/localization_node.cpp)
-target_link_libraries(localization_node humanoidlocalization ${catkin_LIBRARIES} ${OCTOMAP_LIBRARIES})
+target_link_libraries(localization_node humanoidlocalization ${catkin_LIBRARIES})
 
 ################################################################################
 # Install
@@ -120,8 +117,6 @@ install(TARGETS ${LIBRARIES} humanoidlocalization
 ) 
 
 install(TARGETS localization_node
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

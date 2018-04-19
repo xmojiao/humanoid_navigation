@@ -33,9 +33,10 @@
   <depend>tf</depend>
   <depend>message_filters</depend>
   <depend>octomap_ros</depend>
+  <depend>octomap</depend>
+  <depend>dynamic_edt_3d</depend>
   <depend>pcl_ros</depend>
   <depend>pcl_conversions</depend>
   <depend>boost</depend>
   <depend>eigen</depend>
-  <depend>octomap</depend>
 </package>

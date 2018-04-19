@@ -55,7 +55,7 @@ add_library(${PROJECT_NAME} src/SBPLPlanner2D.cpp)
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${SBPL_LIBRARIES})
 
 add_executable(sbpl_2d_planner_node src/humanoid_planner_2d.cpp)
-target_link_libraries(sbpl_2d_planner_node ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+target_link_libraries(sbpl_2d_planner_node ${catkin_LIBRARIES} ${PROJECT_NAME} ${OpenCV_LIBRARIES})
 
 ################################################################################
 # Install

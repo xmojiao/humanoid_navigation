@@ -75,17 +75,18 @@ include_directories(
   ${SBPL_INCLUDE_DIRS}
 )
 
-set(FOOTSTEP_PLANNER_FILES src/FootstepPlanner.cpp
+set(FOOTSTEP_PLANNER_FILES 
+  src/FootstepPlanner.cpp
 	src/FootstepNavigation.cpp
-    src/FootstepPlannerNode.cpp
-    src/FootstepPlannerEnvironment.cpp 
-    src/Footstep.cpp
-    src/PlanningState.cpp
-    src/Heuristic.cpp 
-    src/helper.cpp
-    src/PathCostHeuristic.cpp
-    src/PlanningStateChangeQuery.cpp
-    src/State.cpp
+  src/FootstepPlannerNode.cpp
+  src/FootstepPlannerEnvironment.cpp 
+  src/Footstep.cpp
+  src/PlanningState.cpp
+  src/Heuristic.cpp 
+  src/helper.cpp
+  src/PathCostHeuristic.cpp
+  src/PlanningStateChangeQuery.cpp
+  src/State.cpp
 )
 
 add_library(${PROJECT_NAME} ${FOOTSTEP_PLANNER_FILES})
@@ -103,14 +104,20 @@ target_link_libraries(footstep_navigation_node ${PROJECT_NAME} ${SBPL_LIBRARIES}
 ################################################################################
 # Install
 ################################################################################
-install(TARGETS ${PROJECT_NAME} footstep_planner_node footstep_planner_walls 
+install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-install(TARGETS footstep_navigation_node
+install(TARGETS footstep_planner_node footstep_planner_walls footstep_navigation_node
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+install(PROGRAMS
+  scripts/corrected_initialpose.py
+  scripts/plan_footsteps.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 install(DIRECTORY include/${PROJECT_NAME}/
@@ -119,12 +126,6 @@ install(DIRECTORY include/${PROJECT_NAME}/
 
 install(DIRECTORY config launch maps 
 	DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
-
-install(PROGRAMS
-  scripts/corrected_initialpose.py
-  scripts/plan_footsteps.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 ################################################################################
