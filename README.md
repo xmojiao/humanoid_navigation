@@ -52,7 +52,7 @@
 
 ## Notice for Original Source Code and author, maintainer
 
-This packages are a modified version by forking the following [humanoid_navigation](https://github.com/ahornung/humanoid_navigation) package by ROBOTIS.
+These packages are a modified version by forking the following [humanoid_navigation](https://github.com/ahornung/humanoid_navigation) package by ROBOTIS.
 Please refer to the following links for original information.
 
 - Original Source Code by Armin Hornung (Electric ~ Hydro Version)
