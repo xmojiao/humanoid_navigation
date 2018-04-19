@@ -2,6 +2,15 @@
 Changelog for package humanoid_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.4.2 (2018-04-19)
+------------------
+* refacotoring to release on kinetic
+* added documents related to footstep_planner packages
+* added information new maintainer
+* fixed CMakeLists.txt and package.xml files for dependency
+* fixed footstep_planner node crashes when map changesth
+* Contributors: Aleksey Titov, Kayman, Pyo
+
 0.4.1 (2016-09-05)
 ------------------
 * humanoid_navigation : removed hrl_kinematics from runtime dependancy

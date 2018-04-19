@@ -2,6 +2,14 @@
 Changelog for package gridmap_2d
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.4.2 (2018-04-19)
+------------------
+* refacotoring to release on kinetic
+* added documents related to gridmap_2d packages
+* added information new maintainer
+* fixed CMakeLists.txt and package.xml files for dependency
+* Contributors: Kayman, Pyo
+
 0.4.1 (2016-09-05)
 ------------------
 * Added include files for footstep_planner and gridmap_2d for install.

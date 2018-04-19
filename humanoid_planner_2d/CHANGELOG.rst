@@ -2,6 +2,14 @@
 Changelog for package humanoid_planner_2d
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.4.2 (2018-04-19)
+------------------
+* refacotoring to release on kinetic
+* added documents related to humanoid_planner_2d packages
+* added information new maintainer
+* fixed CMakeLists.txt and package.xml files for dependency
+* Contributors: Kayman, Pyo
+
 0.4.1 (2016-09-05)
 ------------------
 * catkinize the stack
