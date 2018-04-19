@@ -3,14 +3,15 @@
   <name>gridmap_2d</name>
   <version>0.4.2</version>
   <description>
-     gridmap_2d - a simple 2D gridmap structure, based on OpenCV's cv::Mat
+    gridmap_2d - a simple 2D gridmap structure, based on OpenCV's cv::Mat
   </description>
-  <author>Armin Hornung</author>
   <license>BSD</license>
-  <maintainer email="HornungA@informatik.uni-freiburg.de">Armin Hornung</maintainer>
+  <author>Armin Hornung</author>
   <maintainer email="aravindadp@gmail.com">Pramuditha Aravinda</maintainer>
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
-  <url>http://ros.org/wiki/gridmap_2d</url>
+  <url type="website">http://wiki.ros.org/gridmap_2d</url>
+  <url type="repository">https://github.com/ROBOTIS-GIT/humanoid_navigation</url>
+  <url type="bugtracker">https://github.com/ROBOTIS-GIT/humanoid_navigation/issues</url>
   <buildtool_depend>catkin</buildtool_depend>
   <depend>roscpp</depend>
   <depend>rosconsole</depend>

@@ -3,18 +3,21 @@
   <name>humanoid_navigation</name>
   <version>0.4.2</version>
   <description>
-    <p>
-      This stack contains packages for humanoid (biped) navigation,
-      developed at the <a href="http://hrl.informatik.uni-freiburg.de/">Humanoid Robots Lab</a>
-      at the Albert-Ludwigs-Universitat in Freiburg, Germany.
-    </p>
+    <p>This stack contains packages for humanoid (biped) navigation,
+    developed at the <a href="http://hrl.informatik.uni-freiburg.de/">Humanoid Robots Lab</a>
+    at the Albert-Ludwigs-Universitat in Freiburg, Germany.</p>
   </description>
-  <license>BSD, GPL 3</license>
+  <license>BSD</license>
+  <license>GPLv3</license>
   <author>Armin Hornung</author>
-  <maintainer email="HornungA@informatik.uni-freiburg.de">Armin Hornung</maintainer>
+  <author>Johannes Garimort</author>
+  <author>Stefan Osswald</author>
+  <author>Daniel Maier</author>
   <maintainer email="aravindadp@gmail.com">Pramuditha Aravinda</maintainer>
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
-  <url>http://ros.org/wiki/humanoid_navigation</url>
+  <url type="website">http://wiki.ros.org/humanoid_navigation</url>
+  <url type="repository">https://github.com/ROBOTIS-GIT/humanoid_navigation</url>
+  <url type="bugtracker">https://github.com/ROBOTIS-GIT/humanoid_navigation/issues</url>
   <buildtool_depend>catkin</buildtool_depend>
   <exec_depend>footstep_planner</exec_depend>
   <exec_depend>gridmap_2d</exec_depend>
