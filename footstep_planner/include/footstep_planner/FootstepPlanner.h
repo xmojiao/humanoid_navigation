@@ -44,6 +44,7 @@
 
 #include <assert.h>
 #include <time.h>
+#define BEZIERPARA 0.5 
 
 
 namespace footstep_planner
@@ -311,6 +312,11 @@ protected:
   std::string ivMarkerNamespace;
 
   std::vector<int> ivPlanningStatesIds;
+
+  std::pair<float, float> pointF0; //F1
+  std::pair<float, float> pointF1; //F2
+  std::pair<float, float> pointF2;  //F3
+  std::pair<float, float> pointF3;  //F4
 };
 }
 

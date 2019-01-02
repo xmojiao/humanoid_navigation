@@ -36,7 +36,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <nav_msgs/OccupancyGrid.h>
 
-
+#define PASSWIDTH 0.2 
 
 
 
@@ -46,6 +46,15 @@ namespace gridmap_2d{
  * as binary map (free: 255, occupied: 0) and as distance map (distance
  * to closest obstacle in meter).
  */
+struct Point2DTheta {
+	Point2DTheta()
+	{
+		x = 0.0;
+		y = 0.0;
+	}
+	float x;
+	float y;
+};
 class GridMap2D {
 public:
   GridMap2D();
@@ -61,7 +70,10 @@ public:
 
   /// check if a coordinate is covered by the map extent (same as worldToMap)
   bool inMapBounds(double wx, double wy) const;
-
+  int state_2_cell(float value, float cell_size)
+{
+  return value >= 0 ? int(value / cell_size) : int(value / cell_size) - 1;
+}
   /**
    * Inflate occupancy map by inflationRadius
    */
@@ -88,6 +100,7 @@ public:
 
   /// Returns distance (in m) at world coordinates <wx,wy> in m; -1 if out of bounds!
   float distanceMapAt(double wx, double wy) const;
+  float distanceMapAtStartGoal(double wx, double wy) const;
 
   /// Returns distance (in m) at map cell <mx, my> in m; -1 if out of bounds!
   float distanceMapAtCell(unsigned int mx, unsigned int my) const;
@@ -107,6 +120,7 @@ public:
 
   /// @return true if map is occupied at cell <mx, my>
   bool isOccupiedAtCell(unsigned int mx, unsigned int my) const;
+  bool isOccupiedAtStartGoal(double wx, double wy) const;
 
   ///@brief Initialize map from a ROS OccupancyGrid message
   void setMap(const nav_msgs::OccupancyGridConstPtr& grid_map, bool unknown_as_obstacle = false);
@@ -133,6 +147,53 @@ public:
 
   const static uchar FREE = 255;  ///< char value for "free": 255
   const static uchar OCCUPIED = 0; ///< char value for "free": 0
+
+  cv::Mat bezier_binaryMap;
+  cv::Mat bezier_distMap;
+  Point2DTheta sPoint[4];
+
+  //Point2DTheta start1; //F1
+  //Point2DTheta start2; //F2
+  //Point2DTheta goal1;  //F3
+  //Point2DTheta goal2;  //F4
+
+  void getBezierF0(float x, float y)
+  {
+	  sPoint[0].x = x;
+	  sPoint[0].y = y;
+  }
+  void getBezierF1(float x, float y)
+  {
+	  sPoint[1].x = x;
+	  sPoint[1].y = y;
+  }
+  void getBezierF2(float x, float y)
+  {
+	  sPoint[2].x = x;
+	  sPoint[2].y = y;
+  }
+  void getBezierF3(float x, float y)
+  {
+	  sPoint[3].x = x;
+	  sPoint[3].y = y;
+  }
+  float Factrl(int number)
+  {
+	  if (number <= 1)
+		  return 1;
+	  else
+		  return number * Factrl(number - 1);
+  };
+
+  // function to calculate the factorial function for Bernstein basis
+  float Ni(int, int);
+
+  // function to calculate the Bernstein basis
+  float Basis(int, int, float);
+
+  // Bezier curve subroutine
+  int Bezier(Point2DTheta *sPoint, int inPointNum, Point2DTheta *sOutPoint, int outPointNum);
+  int updateBezierMap(std::pair<float, float> pointF0, std::pair<float, float> pointF1, std::pair<float, float> pointF2, std::pair<float, float> pointF3);
 
 protected:
   cv::Mat m_binaryMap;	///< binary occupancy map. 255: free, 0 occupied.

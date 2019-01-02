@@ -149,7 +149,11 @@ public:
    * obstacle.
    */
   bool occupied(const State& s);
-
+  bool occupiedStartGoal(const PlanningState& s);
+  bool occupiedStartGoal(const State& s);
+  bool collision_check_StartGoal(double x, double y, double theta, double height,
+	  double width, int accuracy,
+	  gridmap_2d::GridMap2D & distance_map);
   /**
    * @brief Try to receive a state with a certain ID.
    *
@@ -304,6 +308,7 @@ protected:
                        int nNumofNeighs, int nDist_c, bool bSuccs);
 
   void setStateArea(const PlanningState& left, const PlanningState& right);
+  void setStateArea_FootstepSet(const PlanningState& left, const PlanningState& right);
 
   /// Wrapper for FootstepPlannerEnvironment::createNewHashEntry(PlanningState).
   const PlanningState* createNewHashEntry(const State& s);

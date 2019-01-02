@@ -1,63 +1,65 @@
-
-# 1. Prepare
+# Humanoid Navigation
 
 ## ROS Packages for Humanoid Navigation
 |Version|Kinetic + Ubuntu Xenial|Melodic + Ubuntu Bionic|
 |:---:|:---:|:---:|
 |[![GitHub version](https://badge.fury.io/gh/ROBOTIS-GIT%2Fhumanoid_navigation.svg)](https://badge.fury.io/gh/ROBOTIS-GIT%2Fhumanoid_navigation)|[![Build Status](https://travis-ci.org/ROBOTIS-GIT/humanoid_navigation.svg?branch=kinetic-devel)](https://travis-ci.org/ROBOTIS-GIT/humanoid_navigation)|-|
 
-## Original repositories
--  https://github.com/ROBOTIS-GIT/humanoid_navigation.git 
-
 ## Wiki for humanoid_navigation Packages
 - http://wiki.ros.org/humanoid_navigation (metapackage)
-- http://wiki.ros.org/footstep_planner (import)
+- http://wiki.ros.org/footstep_planner
+- http://wiki.ros.org/gridmap_2d
+- http://wiki.ros.org/humanoid_localization
+- http://wiki.ros.org/humanoid_planner_2d
 
+## Documents related to humanoid_navigation Packages
+- [humanoid_navigation](http://wiki.ros.org/humanoid_navigation): ROS metapackages with footstep planning and localization for humanoid / biped robots. This metapackge contains subpackages like [footstep_planner](http://wiki.ros.org/footstep_planner), [gridmap_2d](http://wiki.ros.org/gridmap_2d), [humanoid_localization](http://wiki.ros.org/humanoid_localization), [humanoid_planner_2d](http://wiki.ros.org/humanoid_planner_2d).
+  - Author: Armin Hornung, Johannes Garimort, Stefan Osswald, Daniel Maier
+  - License: GPLv3, BSD
+- [footstep_planner](http://wiki.ros.org/footstep_planner): This package a footstep planner for humanoid / biped robots. The planner builds on SBPL and has anytime as well as dynamic replanning capabilities. The supported planners are: ARA*, AD*, R*.
+  - Author: Johannes Garimort, Armin Hornung
+  - License: GPLv3
+- [gridmap_2d](http://wiki.ros.org/gridmap_2d): This package is a simple 2D grid map structure, based on OpenCV's 'cv::Mat'.
+  - Author: Armin Hornung
+  - License: BSD
+- [humanoid_localization](http://wiki.ros.org/humanoid_localization): 6D localization for humanoid robots based on depth data (laser, point clouds). Two observation models are currently available based on OctoMap as 3D map: Ray casting and an end point model (lookup in the distance map).
+  - Author: Armin Hornung, Stefan Osswald, Daniel Maier
+  - License: GPLv3
+- [humanoid_planner_2d](http://wiki.ros.org/humanoid_planner_2d): Thi package provides a simple 2D path planner as wrapper around SBPL (ARA*, AD*, R*).
+  - Author: Armin Hornung
+  - License: BSD
+- Papers related to these packages:
+  ```
+  "Humanoid robot localization in complex indoor environments",
+  by A. Hornung, K. M. Wurm and M. Bennewitz,
+  2010 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2010, pp. 1690-1695.
+  doi: 10.1109/IROS.2010.5649751
+  ```
+  ```
+  "Humanoid navigation with dynamic footstep plans",
+  by J. Garimort, A. Hornung and M. Bennewitz,
+  2011 IEEE International Conference on Robotics and Automation (ICRA), 2011, pp. 3982-3987.
+  doi: 10.1109/ICRA.2011.5979656
+  ```
+  ```
+  "Anytime search-based footstep planning with suboptimality bounds", 
+  by A. Hornung, A. Dornbush, M. Likhachev and M. Bennewitz,
+  2012 12th IEEE-RAS International Conference on Humanoid Robots (Humanoids 2012), 2012, pp. 674-679.
+  doi: 10.1109/HUMANOIDS.2012.6651592
+  ```
 
------------------------------------------------------
-# 2.Getting Started
-## 2.1 create a ROS Workspace
+---
 
-在home目录创建一个ros工作空间，即文件夹Footstep_planner。在src文件夹下初始化工作空间，然后转到上一层文件夹进行catkin_make编译。
+## Notice for Original Source Code and author, maintainer
 
-```
-mkdir -p ~/Footstep_planner/src
-cd ~/Footstep_planner/src
-catkin_init_workspace
-cd ../
-catkin_make
-```
-如图：
+This packages are a modified version by forking the following [humanoid_navigation](https://github.com/ahornung/humanoid_navigation) package by ROBOTIS.
+Please refer to the following links for original information.
 
-![image](https://note.youdao.com/yws/api/personal/file/0E42BF1FCE6C4B38AF91EE4BED15F7B2?method=download&shareKey=acf124840f2f8114fde05d3cb28d7c16)
-
-使用source将对应的工作空间的路径加入环境变量ROS_PACKAGE_PATH中,使用echo判断添加环境变量成功是否。为了每次打开新的终端仍可以直接使用ros包，将source命令加入到~/.bashrc文件中
-```
-source devel/setup.bash
-echo $ROS_PACKAGE_PATH
-vim ~/.bashrc
-##add $source /opt/ros/kinetic/setup.bash $source ~/Footstep_planner/devel/setup.bash to ~/.bashrc
-source ~/.bashrc
-```
-
-![image](https://note.youdao.com/yws/api/personal/file/3876183C39114F7E85717E8CD65E649F?method=download&shareKey=31b661f325f9c540318ee1f768384277)
-
-添加路径如下图：
-
-![image](https://note.youdao.com/yws/api/personal/file/CF79DC4D77D74F4EBD1A6EDABC223B17?method=download&shareKey=c9eb06e8910bb097944cce7bb4d61c0f)
-
-## 2.2 clone the package 
-
-克隆本github（humanoid_navigation）到src目录下，并到上一级目录下进行catkin_make.
-```
-cd ~/Footstep_planner/src
-git clone https://github.com/xmojiao/humanoid_navigation.git
-cd ../
-catkin_make
-```
-## 2.3 run the project
-`roslaunch footstep_planner footstep_planner_complete.launch`
-
-启动落脚点规划的rviz
-
-![image](https://note.youdao.com/yws/api/personal/file/E1512872F170485A9C2FE809809F7066?method=download&shareKey=718f350862b651606fbfaef1dda680a4)
+- Original Source Code by Armin Hornung (Electric ~ Hydro Version)
+  - Repository: https://github.com/ahornung/humanoid_navigation 
+- Source code for maintenance on ROS Indigo Version (by Pramuditha Aravinda)
+  - Repository: https://github.com/AravindaDP/humanoid_navigation
+  - Issue related: https://github.com/ahornung/humanoid_navigation/issues/14
+- Source code for maintenance on ROS Kinetic Version (by Pyo)
+  - Repository: https://github.com/ROBOTIS-GIT/humanoid_navigation
+  - Issue related: https://github.com/AravindaDP/humanoid_navigation/issues/5

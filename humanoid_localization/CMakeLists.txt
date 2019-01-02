@@ -25,6 +25,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 find_package(Boost REQUIRED COMPONENTS random)
 find_package(Eigen3 REQUIRED)
+find_package(octomap REQUIRED)
 
 # required for OpenMP
 find_package(OpenMP)
@@ -35,10 +36,10 @@ SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}
 SET(LIBRARIES mapmodel motionmodel observationmodel raycastingmodel)
 
 find_package(dynamicEDT3D)
-if (${dynamicEDT3D_FOUND})
+if (${dynamicEDT3D_FOUND})                                                                       
   include_directories(${DYNAMICEDT3D_INCLUDE_DIRS})
   link_directories(${DYNAMICEDT3D_LIBRARY_DIRS})
-  link_libraries(${OCTOMAP_LIBRARIES} ${DYNAMICEDT3D_LIBRARIES})
+  LINK_LIBRARIES(${OCTOMAP_LIBRARIES} ${DYNAMICEDT3D_LIBRARIES})
   list(APPEND LIBRARIES endpointmodel)
 else (${dynamicEDT3D_FOUND})
   MESSAGE(WARNING "dynamicEDT3D library (part of OctoMap >1.5) not found, skipping endpoint model")
@@ -63,7 +64,7 @@ endif (${dynamicEDT3D_FOUND})
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${LIBRARIES} humanoidlocalization
-  CATKIN_DEPENDS
+  CATKIN_DEPENDS 
     roscpp
     std_msgs
     std_srvs
@@ -113,7 +114,7 @@ install(TARGETS ${LIBRARIES} humanoidlocalization
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+) 
 
 install(TARGETS localization_node
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -124,7 +125,7 @@ install(DIRECTORY include/${PROJECT_NAME}/
 )
 
 install(DIRECTORY config launch
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+	DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 ################################################################################

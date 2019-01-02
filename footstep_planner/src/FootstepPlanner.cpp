@@ -372,6 +372,20 @@ FootstepPlanner::run()
              solution_state_ids.size(),
              (ros::WallTime::now()-startTime).toSec());
 
+	for (int i = 0; i < solution_state_ids.size(); i++)
+	{
+		if (i == 0)
+		{
+			ROS_INFO("the parameter of the bezier: %f\n",BEZIERPARA);
+			//ROS_INFO("The half of the width of the passage: %f\n" ,PASSWIDTH);
+			ROS_INFO("The sequense of the id from start to goal: ");
+		}
+		ROS_INFO("%d ",solution_state_ids.at(i));
+		if (i == solution_state_ids.size() - 1)
+		{
+			ROS_INFO("\n");
+		}
+	}
     if (extractPath(solution_state_ids))
     {
       ROS_INFO("Expanded states: %i total / %i new",
@@ -625,6 +639,7 @@ FootstepPlanner::goalPoseCallback(
   // update the goal states in the environment
   if (setGoal(goal_pose))
   {
+    ivMapPtr->updateBezierMap(pointF0, pointF1, pointF2, pointF3);
     if (ivStartPoseSetUp)
     {
       // force planning from scratch when backwards direction
@@ -685,12 +700,20 @@ FootstepPlanner::setGoal(float x, float y, float theta)
     return false;
   }
 
+  pointF3.first = x;
+  pointF3.second = y;
+
+  pointF2.first = x - BEZIERPARA*cos(theta);
+  pointF2.second = y - BEZIERPARA*sin(theta);
+
   State goal(x, y, theta, NOLEG);
   State foot_left = getFootPose(goal, LEFT);
   State foot_right = getFootPose(goal, RIGHT);
 
-  if (ivPlannerEnvironmentPtr->occupied(foot_left) ||
-      ivPlannerEnvironmentPtr->occupied(foot_right))
+  //if (ivPlannerEnvironmentPtr->occupied(foot_left) ||
+  //    ivPlannerEnvironmentPtr->occupied(foot_right))
+  if (ivPlannerEnvironmentPtr->occupiedStartGoal(foot_left) ||
+      ivPlannerEnvironmentPtr->occupiedStartGoal(foot_right))
   {
     ROS_ERROR("Goal pose at (%f %f %f) not accessible.", x, y, theta);
     ivGoalPoseSetUp = false;
@@ -735,8 +758,10 @@ FootstepPlanner::setStart(const geometry_msgs::PoseStampedConstPtr start_pose)
 bool
 FootstepPlanner::setStart(const State& left_foot, const State& right_foot)
 {
-  if (ivPlannerEnvironmentPtr->occupied(left_foot) ||
-      ivPlannerEnvironmentPtr->occupied(right_foot))
+  //if (ivPlannerEnvironmentPtr->occupied(left_foot) ||
+  //    ivPlannerEnvironmentPtr->occupied(right_foot))
+  if (ivPlannerEnvironmentPtr->occupiedStartGoal(left_foot) ||
+      ivPlannerEnvironmentPtr->occupiedStartGoal(right_foot))
   {
     ivStartPoseSetUp = false;
     return false;
@@ -758,6 +783,10 @@ FootstepPlanner::setStart(float x, float y, float theta)
     ROS_ERROR("Distance map hasn't been initialized yet.");
     return false;
   }
+  pointF0.first = x;
+  pointF0.second = y;
+  pointF1.first = x + BEZIERPARA*cos(theta);
+  pointF1.second = y + BEZIERPARA*sin(theta);
 
   State start(x, y, theta, NOLEG);
   State foot_left = getFootPose(start, LEFT);
