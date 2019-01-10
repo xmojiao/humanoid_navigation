@@ -63,3 +63,115 @@ Please refer to the following links for original information.
 - Source code for maintenance on ROS Kinetic Version (by Pyo)
   - Repository: https://github.com/ROBOTIS-GIT/humanoid_navigation
   - Issue related: https://github.com/AravindaDP/humanoid_navigation/issues/5
+
+
+SBPL install
+
+        SBPL uses git as its version control system. From the directory where
+            you want the SBPL source to reside, clone the latest source from
+            https://github.com/sbpl/sbpl:
+
+            git clone https://github.com/sbpl/sbpl.git
+
+            In the source directory, build the SBPL library using standard
+            CMake build conventions:
+
+            mkdir build
+            cd build
+            cmake ..
+            make
+  1.2 Install SBPL
+
+            Install the built library and headers onto your local system
+            (usually into /usr/local):
+
+            sudo make install    
+            
+1000  mkdir -p ~/catkin_ws/src
+ 1001  echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+ 1002  source ~/.bashrc
+ 1003  sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential git
+ 1004  rosrun turtlesim turtlesim_node
+ 1005  cd catkin_ws/src/
+ 1006  git clone https://github.com/xmojiao/humanoid_navigation.git
+ 1007  ls
+ 1008  cd ../
+ 1009  catkin_make
+ 1010  cd src/
+ 1011  git clone git@github.com:sbpl/sbpl.git
+ 1012  mkdir build
+ 1013  cd build
+ 1014  cmake ..
+ 1015  make
+ 1016  cd ../
+ 1017  make
+ 1018  cd sbpl/
+ 1019  ls
+ 1020  cd ../
+ 1021  ls
+ 1022  rm build/
+ 1023  rm -rf build/
+ 1024  cd sbpl/
+ 1025  ls
+ 1026  mkdir build
+ 1027  cd build
+ 1028  cmake ..
+ 1029  make
+ 1030  cd ../../
+ 1031  cd ../
+ 1032  catkin_make
+ 1033  cd src/sbpl/build/
+ 1034  sudo make install
+ 1035  cd ../../../
+ 1036  sudo make install
+ 1037  catkin_make
+ 1038  sudo apt-get install ros-kinetic-humanoid-nav-msgs
+ 1039  catkin_make
+ 1040  sudo apt-get install ros-kinetic-map-sever
+ 1041  sudo apt-get install ros-kinetic-navigation-msgs
+ 1042  cd src/
+ 1043  git clone https://github.com/ros-planning/navigation_msgs.git
+ 1044  cd ../
+ 1045  catkin_make
+ 1046  cd src/
+ 1047  ls
+ 1048  mv humanoid_navigation/ ../../
+ 1049  cd ../
+ 1050  catkin_make
+ 1051  pip install em
+ 1052  catkin_make
+ 1053  cd src/
+ 1054  mv sbpl ../../
+ 1055  cd ..
+ 1056  catkin_make
+ 1057  cd srcatkin_make
+ 1058  cd src/
+ 1059  ls
+ 1060  mv navigation_msgs/ ../../
+ 1061  cd ../
+ 1062  catkin_make
+ 1063  vim ~/.bashrc
+ 1064  source ~/.bashrc
+ 1065  mv ../sbpl ./src
+ 1066  catkin_make
+ 1067  ls src
+ 1068  mv ../navigation_msgs/ ./src
+ 1069  catkin_make
+ 1070  mv ../humanoid_navigation/ ./src
+ 1071  catkin_make
+ 1072  mv ./src/humanoid_navigation/ ../../
+ 1073  mv ./src/humanoid_navigation/ ../
+ 1074  cd src/
+ 1075  git clone git@github.com:ROBOTIS-GIT/humanoid_navigation.git
+ 1076  cd ../
+ 1077  catkin_make
+ 1078  sudo apt-get install ros-kinetic-map-server
+ 1079  mv ./src/humanoid_navigation/ ../Documents/
+ 1080  mv ../humanoid_navigation/ ./src
+ 1081  catkin_make
+ 1082  sudo apt-get install ros-kinetic-octomap-msgs
+ 1083  catkin_make
+ 1084  sudo apt-get install ros-kinetic-octomap-ros
+ 1085  catkin_make
+ 1086  roslaunch footstep_planner footstep_planner_complete.launch
+ 1087  history
