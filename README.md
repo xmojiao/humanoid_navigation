@@ -24,7 +24,7 @@
 
 **原footstep planner github:  https://github.com/ROBOTIS-GIT/humanoid_navigation.git**
 
-**本github(https://github.com/xmojiao/humanoid_navigation)使用贝塞尔曲线限制sbpl的搜索空间，损失路径的cost, 但减少了2/3的规划时间**。****
+**本github(https://github.com/xmojiao/humanoid_navigation) 使用贝塞尔曲线限制sbpl的搜索空间，损失路径的cost, 但减少了2/3的规划时间**。****
 
 为了便于算法调试，我们整合footstep和sbpl，去掉ros，实现在win10_x64+visual studio 2017环境下编译调试优化，具体代码：https://github.com/xmojiao/footstep_sbpl_vs2017_cpp/tree/dev-jiao
 
