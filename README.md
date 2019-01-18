@@ -12,54 +12,108 @@
 - http://wiki.ros.org/humanoid_localization
 - http://wiki.ros.org/humanoid_planner_2d
 
-## Documents related to humanoid_navigation Packages
-- [humanoid_navigation](http://wiki.ros.org/humanoid_navigation): ROS metapackages with footstep planning and localization for humanoid / biped robots. This metapackge contains subpackages like [footstep_planner](http://wiki.ros.org/footstep_planner), [gridmap_2d](http://wiki.ros.org/gridmap_2d), [humanoid_localization](http://wiki.ros.org/humanoid_localization), [humanoid_planner_2d](http://wiki.ros.org/humanoid_planner_2d).
-  - Author: Armin Hornung, Johannes Garimort, Stefan Osswald, Daniel Maier
-  - License: GPLv3, BSD
-- [footstep_planner](http://wiki.ros.org/footstep_planner): This package a footstep planner for humanoid / biped robots. The planner builds on SBPL and has anytime as well as dynamic replanning capabilities. The supported planners are: ARA*, AD*, R*.
-  - Author: Johannes Garimort, Armin Hornung
-  - License: GPLv3
-- [gridmap_2d](http://wiki.ros.org/gridmap_2d): This package is a simple 2D grid map structure, based on OpenCV's 'cv::Mat'.
-  - Author: Armin Hornung
-  - License: BSD
-- [humanoid_localization](http://wiki.ros.org/humanoid_localization): 6D localization for humanoid robots based on depth data (laser, point clouds). Two observation models are currently available based on OctoMap as 3D map: Ray casting and an end point model (lookup in the distance map).
-  - Author: Armin Hornung, Stefan Osswald, Daniel Maier
-  - License: GPLv3
-- [humanoid_planner_2d](http://wiki.ros.org/humanoid_planner_2d): Thi package provides a simple 2D path planner as wrapper around SBPL (ARA*, AD*, R*).
-  - Author: Armin Hornung
-  - License: BSD
-- Papers related to these packages:
-  ```
-  "Humanoid robot localization in complex indoor environments",
-  by A. Hornung, K. M. Wurm and M. Bennewitz,
-  2010 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2010, pp. 1690-1695.
-  doi: 10.1109/IROS.2010.5649751
-  ```
-  ```
-  "Humanoid navigation with dynamic footstep plans",
-  by J. Garimort, A. Hornung and M. Bennewitz,
-  2011 IEEE International Conference on Robotics and Automation (ICRA), 2011, pp. 3982-3987.
-  doi: 10.1109/ICRA.2011.5979656
-  ```
-  ```
-  "Anytime search-based footstep planning with suboptimality bounds", 
-  by A. Hornung, A. Dornbush, M. Likhachev and M. Bennewitz,
-  2012 12th IEEE-RAS International Conference on Humanoid Robots (Humanoids 2012), 2012, pp. 674-679.
-  doi: 10.1109/HUMANOIDS.2012.6651592
-  ```
+
 
 ---
 
-## Notice for Original Source Code and author, maintainer
 
-This packages are a modified version by forking the following [humanoid_navigation](https://github.com/ahornung/humanoid_navigation) package by ROBOTIS.
-Please refer to the following links for original information.
+## 1.项目介绍
 
-- Original Source Code by Armin Hornung (Electric ~ Hydro Version)
-  - Repository: https://github.com/ahornung/humanoid_navigation 
-- Source code for maintenance on ROS Indigo Version (by Pramuditha Aravinda)
-  - Repository: https://github.com/AravindaDP/humanoid_navigation
-  - Issue related: https://github.com/ahornung/humanoid_navigation/issues/14
-- Source code for maintenance on ROS Kinetic Version (by Pyo)
-  - Repository: https://github.com/ROBOTIS-GIT/humanoid_navigation
-  - Issue related: https://github.com/AravindaDP/humanoid_navigation/issues/5
+基于kinetic 版的ros系统，跟随[footstep planner wiki](http://wiki.ros.org/footstep_planner)，从GitHub下载并安装footstep planner(落脚点规划系统)，使其在给定开始和目标位置时，实现在2d map上规划机器人的落脚点序列。 
+
+
+**原footstep planner github:  https://github.com/ROBOTIS-GIT/humanoid_navigation.git**
+
+**本github(https://github.com/xmojiao/humanoid_navigation)使用贝塞尔曲线限制sbpl的搜索空间，损失路径的cost, 但减少了2/3的规划时间**。****
+
+为了便于算法调试，我们整合footstep和sbpl，去掉ros，实现在win10_x64+visual studio 2017环境下编译调试优化，具体代码：https://github.com/xmojiao/footstep_sbpl_vs2017_cpp/tree/dev-jiao
+
+
+
+
+
+## 2.项目安装
+#### 本项目的附加依赖包
+- sbbp
+- navigation-msgs
+- python empy包
+
+#### 1.创建工作空间
+在主目录下创建工作空间 catkin_ws,然后初始化 catkin_init_workspace。
+执行完catkin_make时，发现工作空间catkin_ws中有三个目录： build  devel  src
+其中，src是我们创建工作空间时创建的目录，另外两个是执行完 catkin_make 后生成的。
+
+```
+
+mkdir -p ~/catkin_ws/src
+cd ~/catkin_ws/src
+catkin_init_workspace
+cd ~/catkin_ws/
+catkin_make
+echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
+
+
+#### 2. SBPL install
+从github下载SBPL源程序，然后编译安装
+
+SBPL uses git as its version control system. From the directory where
+you want the SBPL source to reside, clone the latest source from
+https://github.com/sbpl/sbpl:
+
+``` git clone https://github.com/sbpl/sbpl.git ```
+
+In the source directory, build the SBPL library using standard
+CMake build conventions:
+``` 
+mkdir build
+cd build
+cmake ..
+make
+``` 
+Install the built library and headers onto your local system
+            (usually into /usr/local):
+
+```sudo make install    ```
+
+
+#### 3. 安装humanoid_navigation包
+
+```
+cd src/
+git clone git@github.com:ROBOTIS-GIT/humanoid_navigation.git
+cd ../
+catkin_make
+```
+
+
+ 
+#### 4. 安装必要的navigation-msgs包
+此处编译时也可能需要其他包，需要什么就使用ros-kinetic-安装。
+
+```
+sudo apt-get install ros-kinetic-humanoid-nav-msgs
+sudo apt-get install ros-kinetic-map-sever
+git clone https://github.com/ros-planning/navigation_msgs.git
+../
+catkin_make
+
+```
+也可能会提示no modeule em,此时使用以下命令安装
+
+```
+pip install em
+```
+#### 5. launch
+catkin_make 编译成功，就可以进行roslaunch
+
+
+```
+catkin_make
+roslaunch footstep_planner footstep_planner_complete.launch
+
+```
+分别使用2D Pose Estimate和2D Nav Goal 给定开始和结束的位置和方向，稍等片刻就可以看到落脚点规划器规划的足迹序列
+
+![image](https://note.youdao.com/yws/api/personal/file/E22D500184A44DC5BB6DF58B0AD05FDA?method=download&shareKey=844ac104e466837217995a5521846315)
